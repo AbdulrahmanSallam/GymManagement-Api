@@ -1,6 +1,5 @@
 @Host = http://localhost:5000
-
-@SubscriptionId = 58059424-6a49-41dd-bb2f-6857525a6d97
+@SubscriptionId = 77b67776-3e88-4e70-888c-208ada4e5f8f
 
 GET {{Host}}/api/Subscriptions/{{SubscriptionId}}
 Accept: application/json

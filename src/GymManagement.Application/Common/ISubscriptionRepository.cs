@@ -6,9 +6,10 @@ namespace GymManagement.Application.Common;
 public interface ISubscriptionRepository
 {
 
-    public Task<Subscription?> GetByIdAsync(Guid id);
+    Task<Subscription?> GetByIdAsync(Guid id);
 
-    public Task AddAsync(Subscription subscription);
+    Task AddAsync(Subscription subscription);
 
+    Task UpdateAsync(Subscription subscription);
 
 }

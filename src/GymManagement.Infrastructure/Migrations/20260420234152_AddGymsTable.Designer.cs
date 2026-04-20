@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(GymManagementDbContext))]
-    [Migration("20260419213415_AddSubscriptionTable")]
-    partial class AddSubscriptionTable
+    [Migration("20260420234152_AddGymsTable")]
+    partial class AddGymsTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,37 @@ namespace GymManagement.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("GymManagement.Domain.Gyms.Gym", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SubscriptionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("_maxRooms")
+                        .HasColumnType("int")
+                        .HasColumnName("MaxRooms");
+
+                    b.Property<string>("_roomIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("RoomIds");
+
+                    b.Property<string>("_trainerIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("TrainerIds");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Gyms");
+                });
 
             modelBuilder.Entity("GymManagement.Domain.Subscriptions.Subscription", b =>
                 {
@@ -37,6 +68,15 @@ namespace GymManagement.Infrastructure.Migrations
                     b.Property<Guid>("_adminId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("AdminId");
+
+                    b.Property<string>("_gymIds")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("GymIds");
+
+                    b.Property<int>("_maxGyms")
+                        .HasColumnType("int")
+                        .HasColumnName("MaxGym");
 
                     b.HasKey("Id");
 

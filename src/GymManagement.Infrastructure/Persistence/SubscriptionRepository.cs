@@ -1,8 +1,8 @@
 using GymManagement.Application.Common;
 using GymManagement.Domain.Subscriptions;
+using Microsoft.EntityFrameworkCore;
+
 namespace GymManagement.Infrastructure.Persistence;
-
-
 
 public class SubscriptionRepository : ISubscriptionRepository
 {
@@ -20,6 +20,17 @@ public class SubscriptionRepository : ISubscriptionRepository
 
     public async Task<Subscription?> GetByIdAsync(Guid id)
     {
-        return await _context.Subscriptions.FindAsync(id);
+        return await _context.Subscriptions.FirstOrDefaultAsync(subscription => subscription.Id == id);
     }
+
+
+    public Task UpdateAsync(Subscription subscription)
+    {
+        _context.Subscriptions.Update(subscription);
+
+        return Task.CompletedTask;
+    }
+
+
+
 }

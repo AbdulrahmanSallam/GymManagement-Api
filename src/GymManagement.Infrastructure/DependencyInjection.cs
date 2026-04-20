@@ -1,4 +1,5 @@
 using GymManagement.Application.Common;
+using GymManagement.Infrastructure.Gyms;
 using GymManagement.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ public static class DependencyInjection
         });
 
         serviceCollection.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+        serviceCollection.AddScoped<IGymsRepository, GymsRepository>();
         serviceCollection.AddScoped<IUnitOfWork>(serviceCollection =>
             serviceCollection.GetRequiredService<GymManagementDbContext>()
         );
