@@ -1,0 +1,13 @@
+@Host = http://localhost:5000
+
+@SubscriptionId = 58059424-6a49-41dd-bb2f-6857525a6d97
+
+GET {{Host}}/api/Subscriptions/{{SubscriptionId}}
+Accept: application/json
+
+
+
+# {
+#     "Id":{{AdminId}},
+#     "subscriptionType": "Free",
+# }

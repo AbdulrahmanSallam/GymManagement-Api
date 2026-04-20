@@ -1,0 +1,30 @@
+using System.Reflection;
+using GymManagement.Application.Common;
+using GymManagement.Domain.Subscriptions;
+using Microsoft.EntityFrameworkCore;
+
+namespace GymManagement.Infrastructure.Persistence;
+
+
+
+public class GymManagementDbContext : DbContext, IUnitOfWork
+{
+
+    public DbSet<Subscription> Subscriptions { get; set; }
+
+    public GymManagementDbContext(DbContextOptions<GymManagementDbContext> options) : base(options)
+    {
+
+    }
+
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    public async Task CommitChangesAsync()
+    {
+        await base.SaveChangesAsync();
+    }
+}
