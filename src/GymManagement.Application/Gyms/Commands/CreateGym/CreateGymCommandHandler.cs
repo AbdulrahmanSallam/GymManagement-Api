@@ -1,5 +1,5 @@
 using ErrorOr;
-using GymManagement.Application.Common;
+using GymManagement.Application.Common.Interfaces;
 using GymManagement.Domain.Gyms;
 using MediatR;
 
@@ -8,10 +8,10 @@ namespace GymManagement.Application.Gyms.Commands.CreateGym;
 public class CreateGymCommandHandler : IRequestHandler<CreateGymCommand, ErrorOr<Gym>>
 {
     private readonly IGymsRepository _gymRepository;
-    private readonly ISubscriptionRepository _subscriptionRepository;
+    private readonly ISubscriptionsRepository _subscriptionRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateGymCommandHandler(IGymsRepository gymRepository, ISubscriptionRepository subscriptionRepository, IUnitOfWork unitOfWork)
+    public CreateGymCommandHandler(IGymsRepository gymRepository, ISubscriptionsRepository subscriptionRepository, IUnitOfWork unitOfWork)
     {
         _gymRepository = gymRepository;
         _subscriptionRepository = subscriptionRepository;

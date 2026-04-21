@@ -4,6 +4,7 @@ using GymManagement.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(GymManagementDbContext))]
-    partial class GymManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260421142251_AddAdminsTable")]
+    partial class AddAdminsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace GymManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("Admins");
 
                     b.HasData(
                         new
@@ -70,7 +73,7 @@ namespace GymManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gyms", (string)null);
+                    b.ToTable("Gyms");
                 });
 
             modelBuilder.Entity("GymManagement.Domain.Subscriptions.Subscription", b =>
@@ -97,7 +100,7 @@ namespace GymManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 #pragma warning restore 612, 618
         }

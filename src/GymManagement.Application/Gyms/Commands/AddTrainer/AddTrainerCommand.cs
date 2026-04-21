@@ -1,5 +1,5 @@
 using ErrorOr;
-using GymManagement.Application.Common;
+using GymManagement.Application.Common.Interfaces;
 using MediatR;
 
 namespace GymManagement.Application.Gyms.Commands.AddTrainer;
@@ -11,10 +11,11 @@ public record AddTrainerCommand(Guid SubscriptionId, Guid GymId, Guid TrainerId)
 public class AddTrainerCommandHandler : IRequestHandler<AddTrainerCommand, ErrorOr<Success>>
 {
     private readonly IGymsRepository _gymsRepository;
-    private readonly ISubscriptionRepository _subscriptionRepository;
+    private readonly ISubscriptionsRepository _subscriptionRepository;
+
     private readonly IUnitOfWork _unitOfWork;
 
-    public AddTrainerCommandHandler(IGymsRepository gymsRepository, ISubscriptionRepository subscriptionRepository, IUnitOfWork unitOfWork)
+    public AddTrainerCommandHandler(IGymsRepository gymsRepository, ISubscriptionsRepository subscriptionRepository, IUnitOfWork unitOfWork)
     {
         _gymsRepository = gymsRepository;
         _subscriptionRepository = subscriptionRepository;

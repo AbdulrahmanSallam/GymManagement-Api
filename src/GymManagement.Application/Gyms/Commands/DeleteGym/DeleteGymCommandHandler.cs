@@ -1,5 +1,5 @@
 using ErrorOr;
-using GymManagement.Application.Common;
+using GymManagement.Application.Common.Interfaces;
 using MediatR;
 
 namespace GymManagement.Application.Gyms.Commands.DeleteGym;
@@ -7,11 +7,11 @@ namespace GymManagement.Application.Gyms.Commands.DeleteGym;
 public class DeleteGymCommandHandler : IRequestHandler<DeleteGymCommand, ErrorOr<Deleted>>
 {
     private readonly IGymsRepository _gymsRepository;
-    private readonly ISubscriptionRepository _subscriptionRepository;
+    private readonly ISubscriptionsRepository _subscriptionRepository;
 
     private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteGymCommandHandler(IGymsRepository gymsRepository, IUnitOfWork unitOfWork, ISubscriptionRepository subscriptionRepository)
+    public DeleteGymCommandHandler(IGymsRepository gymsRepository, IUnitOfWork unitOfWork, ISubscriptionsRepository subscriptionRepository)
     {
         _gymsRepository = gymsRepository;
         _unitOfWork = unitOfWork;

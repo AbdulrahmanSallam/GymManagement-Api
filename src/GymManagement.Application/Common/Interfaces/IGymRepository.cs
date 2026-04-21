@@ -1,6 +1,6 @@
 using GymManagement.Domain.Gyms;
 
-namespace GymManagement.Application.Common;
+namespace GymManagement.Application.Common.Interfaces;
 
 
 public interface IGymsRepository

@@ -1,5 +1,5 @@
 using ErrorOr;
-using GymManagement.Application.Common;
+using GymManagement.Application.Common.Interfaces;
 using GymManagement.Domain.Subscriptions;
 using MediatR;
 
@@ -11,9 +11,9 @@ public record GetSubscriptionQuery(Guid Id) : IRequest<ErrorOr<Subscription>>;
 
 public class GetSubscriptionQueryHandler : IRequestHandler<GetSubscriptionQuery, ErrorOr<Subscription>>
 {
-    private readonly ISubscriptionRepository _subscriptionRepository;
+    private readonly ISubscriptionsRepository _subscriptionRepository;
 
-    public GetSubscriptionQueryHandler(ISubscriptionRepository subscriptionRepository)
+    public GetSubscriptionQueryHandler(ISubscriptionsRepository subscriptionRepository)
     {
         this._subscriptionRepository = subscriptionRepository;
     }
