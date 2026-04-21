@@ -50,6 +50,14 @@ public class Subscription
         _ => throw new InvalidOperationException()
     };
 
+    public int GetMaxDailySessions() => SubscriptionType.Name switch
+    {
+        nameof(SubscriptionType.Free) => 4,
+        nameof(SubscriptionType.Starter) => int.MaxValue,
+        nameof(SubscriptionType.Pro) => int.MaxValue,
+        _ => throw new InvalidOperationException()
+    };
+
     public bool HasGym(Guid GymId)
     {
         return _gymIds.Contains(GymId);
