@@ -1,6 +1,7 @@
 using ErrorOr;
 using GymManagement.Application.Gyms.Commands.CreateGym;
-using GymManagement.Contracts.Subscriptions;
+using GymManagement.Application.Gyms.Commands.DeleteGym;
+using GymManagement.Contracts.Gyms;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,6 +35,22 @@ public class GymsController : ApiController
 
     }
 
+
+    [HttpDelete("{gymId:guid}")]
+    public async Task<IActionResult> DeleteGym(Guid subscriptionId, Guid gymId)
+    {
+        var command = new DeleteGymCommand(subscriptionId, gymId);
+
+        var DeleteGymResult = await _mediator.Send(command);
+
+        return DeleteGymResult.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+
+
     [HttpGet("{gymId:guid}")]
     public async Task<IActionResult> GetGym(Guid subscriptionId, Guid gymId)
     {
@@ -46,6 +63,7 @@ public class GymsController : ApiController
             Problem
         );
     }
+
 
 
 

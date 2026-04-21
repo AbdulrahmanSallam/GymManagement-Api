@@ -10,5 +10,6 @@ public interface IGymsRepository
 
     public Task<List<Gym>> ListGymsBySubscription(Guid subscriptionId);
 
+    public Task RemoveGymAsync(Gym gym);
     public Task RemoveRangeAsync(List<Gym> gyms);
 }

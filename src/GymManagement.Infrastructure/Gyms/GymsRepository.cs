@@ -21,6 +21,11 @@ public class GymsRepository : IGymsRepository
         await _context.AddAsync(gym);
     }
 
+    public async Task<bool> ExistsAsync(Guid id)
+    {
+        return await _context.Gyms.AsNoTracking().AnyAsync(gym => gym.Id == id);
+    }
+
     public async Task<Gym?> GetByIdAsync(Guid id)
     {
         return await _context.Gyms.FirstOrDefaultAsync(gym => gym.Id == id);
@@ -29,6 +34,12 @@ public class GymsRepository : IGymsRepository
     public async Task<List<Gym>> ListGymsBySubscription(Guid subscriptionId)
     {
         return await _context.Gyms.Where(gym => gym.SubscriptionId == subscriptionId).ToListAsync();
+    }
+
+    public Task RemoveGymAsync(Gym gym)
+    {
+        _context.Gyms.Remove(gym);
+        return Task.CompletedTask;
     }
 
     public Task RemoveRangeAsync(List<Gym> gyms)

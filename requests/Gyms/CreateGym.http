@@ -1,11 +1,11 @@
 @host=http://localhost:5000
-@subscriptionId= 64d47601-73bb-4ce2-ad3e-3eebe969c027
+@subscriptionId= 7778c7cf-2835-4771-ac31-2929234633dc
 
 POST {{host}}/api/subscriptions/{{subscriptionId}}/gyms
 Content-Type: application/json
 
 {
-    "Name": "hello's gym"
+    "Name": "sallam's gym"
 }
 
 ###
