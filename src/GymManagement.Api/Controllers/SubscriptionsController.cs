@@ -1,5 +1,6 @@
 using ErrorOr;
 using GymManagement.Application.Subscriptions.Commands.CreateSubscription;
+using GymManagement.Application.Subscriptions.Commands.DeleteSubscription;
 using GymManagement.Contracts.Subscriptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,19 @@ public class SubscriptionsController : ApiController
                 subscription.Id,
                 ToDto(subscription.SubscriptionType))
             ),
+            Problem
+        );
+    }
+
+    [HttpDelete("{subscriptionId:guid}")]
+    public async Task<IActionResult> DeleteSubscription([FromRoute] DeleteSubscriptionRequest request)
+    {
+        var command = new DeleteSubscriptionCommand(request.SubscriptionId);
+
+        var deleteSubscriptionResult = await _mediator.Send(command);
+
+        return deleteSubscriptionResult.Match(
+            _ => NoContent(),
             Problem
         );
     }

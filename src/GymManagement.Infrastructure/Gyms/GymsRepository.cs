@@ -26,8 +26,15 @@ public class GymsRepository : IGymsRepository
         return await _context.Gyms.FirstOrDefaultAsync(gym => gym.Id == id);
     }
 
+    public async Task<List<Gym>> ListGymsBySubscription(Guid subscriptionId)
+    {
+        return await _context.Gyms.Where(gym => gym.SubscriptionId == subscriptionId).ToListAsync();
+    }
 
+    public Task RemoveRangeAsync(List<Gym> gyms)
+    {
+        _context.RemoveRange(gyms);
 
-
-
+        return Task.CompletedTask;
+    }
 }

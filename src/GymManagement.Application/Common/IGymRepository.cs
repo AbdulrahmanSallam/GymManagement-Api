@@ -7,4 +7,8 @@ public interface IGymsRepository
 {
     public Task AddGymAsync(Gym gym);
     public Task<Gym?> GetByIdAsync(Guid id);
+
+    public Task<List<Gym>> ListGymsBySubscription(Guid subscriptionId);
+
+    public Task RemoveRangeAsync(List<Gym> gyms);
 }
