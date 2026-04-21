@@ -8,8 +8,7 @@ using DomainSubscriptionType = GymManagement.Domain.Subscriptions.SubscriptionTy
 namespace GymManagement.Api.Controllers;
 
 [Route("api/[controller]")]
-[ApiController]
-public class SubscriptionsController : ControllerBase
+public class SubscriptionsController : ApiController
 {
 
     private readonly ISender _mediator;
@@ -35,17 +34,18 @@ public class SubscriptionsController : ControllerBase
         return createSubscriptionResult.Match(
             subscription => CreatedAtAction(
                 nameof(GetSubscription),
+                new { subscriptionId = subscription.Id },
                 new SubscriptionResponse(
                     subscription.Id,
                     ToDto(subscription.SubscriptionType)
                 )
             ),
-         ProblemFromErrors
+         Problem
         );
     }
 
 
-    [HttpGet("{SubscriptionId:guid}")]
+    [HttpGet("{subscriptionId:guid}")]
     public async Task<IActionResult> GetSubscription([FromRoute] GetSubscriptionRequest request)
     {
         var query = new GetSubscriptionQuery(request.SubscriptionId);
@@ -53,11 +53,14 @@ public class SubscriptionsController : ControllerBase
         var getSubscriptionResult = await _mediator.Send(query);
 
         return getSubscriptionResult.Match(
-         subscription => Ok(new SubscriptionResponse(
-            subscription.Id,
-            ToDto(subscription.SubscriptionType)))
-        , ProblemFromErrors);
+            subscription => Ok(new SubscriptionResponse(
+                subscription.Id,
+                ToDto(subscription.SubscriptionType))
+            ),
+            Problem
+        );
     }
+
 
     private static SubscriptionType ToDto(DomainSubscriptionType subscriptionType)
     {
@@ -70,24 +73,4 @@ public class SubscriptionsController : ControllerBase
         };
     }
 
-
-    private IActionResult ProblemFromErrors(List<Error> errors)
-    {
-        var firstError = errors.First();
-
-        var statusCode = firstError.Type switch
-        {
-            ErrorType.Validation => StatusCodes.Status400BadRequest,
-            ErrorType.NotFound => StatusCodes.Status404NotFound,
-            ErrorType.Conflict => StatusCodes.Status409Conflict,
-            ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
-            ErrorType.Forbidden => StatusCodes.Status403Forbidden,
-            _ => StatusCodes.Status500InternalServerError
-        };
-
-        return Problem(
-            statusCode: statusCode,
-            detail: firstError.Description
-        );
-    }
 }
