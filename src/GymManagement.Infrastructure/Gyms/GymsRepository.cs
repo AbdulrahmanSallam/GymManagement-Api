@@ -8,43 +8,50 @@ namespace GymManagement.Infrastructure.Gyms;
 
 public class GymsRepository : IGymsRepository
 {
-    private readonly GymManagementDbContext _context;
+    private readonly GymManagementDbContext _dbContext;
 
-    public GymsRepository(GymManagementDbContext context)
+    public GymsRepository(GymManagementDbContext dbcontext)
     {
-        _context = context;
+        _dbContext = dbcontext;
     }
 
 
     public async Task AddGymAsync(Gym gym)
     {
-        await _context.AddAsync(gym);
+        await _dbContext.AddAsync(gym);
     }
 
     public async Task<bool> ExistsAsync(Guid id)
     {
-        return await _context.Gyms.AsNoTracking().AnyAsync(gym => gym.Id == id);
+        return await _dbContext.Gyms.AsNoTracking().AnyAsync(gym => gym.Id == id);
     }
 
     public async Task<Gym?> GetByIdAsync(Guid id)
     {
-        return await _context.Gyms.FirstOrDefaultAsync(gym => gym.Id == id);
+        return await _dbContext.Gyms.FirstOrDefaultAsync(gym => gym.Id == id);
     }
 
     public async Task<List<Gym>> ListGymsBySubscription(Guid subscriptionId)
     {
-        return await _context.Gyms.Where(gym => gym.SubscriptionId == subscriptionId).ToListAsync();
+        return await _dbContext.Gyms.Where(gym => gym.SubscriptionId == subscriptionId).ToListAsync();
     }
 
     public Task RemoveGymAsync(Gym gym)
     {
-        _context.Gyms.Remove(gym);
+        _dbContext.Gyms.Remove(gym);
         return Task.CompletedTask;
     }
 
     public Task RemoveRangeAsync(List<Gym> gyms)
     {
-        _context.RemoveRange(gyms);
+        _dbContext.RemoveRange(gyms);
+
+        return Task.CompletedTask;
+    }
+
+    public Task UpdateGymAsync(Gym gym)
+    {
+        _dbContext.Update(gym);
 
         return Task.CompletedTask;
     }

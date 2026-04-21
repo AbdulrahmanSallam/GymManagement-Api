@@ -12,4 +12,6 @@ public interface IGymsRepository
 
     public Task RemoveGymAsync(Gym gym);
     public Task RemoveRangeAsync(List<Gym> gyms);
+
+    public Task UpdateGymAsync(Gym gym);
 }

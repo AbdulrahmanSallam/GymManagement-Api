@@ -1,4 +1,5 @@
 using ErrorOr;
+using GymManagement.Application.Gyms.Commands.AddTrainer;
 using GymManagement.Application.Gyms.Commands.CreateGym;
 using GymManagement.Application.Gyms.Commands.DeleteGym;
 using GymManagement.Contracts.Gyms;
@@ -67,6 +68,17 @@ public class GymsController : ApiController
 
 
 
+    [HttpPost("{gymId:guid}/trainers")]
+    public async Task<IActionResult> AddTrainer(AddTrainerRequest request, Guid subscriptionId, Guid gymId)
+    {
+        var command = new AddTrainerCommand(subscriptionId, gymId, request.TrainerId);
 
+        var addTrainerResult = await _mediator.Send(command);
+
+        return addTrainerResult.Match(
+            success => Ok(),
+            Problem);
+    }
 
 }
+

@@ -47,9 +47,9 @@ public class SubscriptionsController : ApiController
 
 
     [HttpGet("{subscriptionId:guid}")]
-    public async Task<IActionResult> GetSubscription([FromRoute] GetSubscriptionRequest request)
+    public async Task<IActionResult> GetSubscription(Guid subscriptionId)
     {
-        var query = new GetSubscriptionQuery(request.SubscriptionId);
+        var query = new GetSubscriptionQuery(subscriptionId);
 
         var getSubscriptionResult = await _mediator.Send(query);
 
@@ -63,9 +63,9 @@ public class SubscriptionsController : ApiController
     }
 
     [HttpDelete("{subscriptionId:guid}")]
-    public async Task<IActionResult> DeleteSubscription([FromRoute] DeleteSubscriptionRequest request)
+    public async Task<IActionResult> DeleteSubscription(Guid subscriptionId)
     {
-        var command = new DeleteSubscriptionCommand(request.SubscriptionId);
+        var command = new DeleteSubscriptionCommand(subscriptionId);
 
         var deleteSubscriptionResult = await _mediator.Send(command);
 
