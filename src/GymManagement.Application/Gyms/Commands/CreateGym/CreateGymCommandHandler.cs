@@ -40,6 +40,7 @@ public class CreateGymCommandHandler : IRequestHandler<CreateGymCommand, ErrorOr
             return addGymResult.Errors;
         }
 
+        await _subscriptionRepository.UpdateAsync(subscription);
         await _gymRepository.AddGymAsync(gym);
         await _unitOfWork.CommitChangesAsync();
 

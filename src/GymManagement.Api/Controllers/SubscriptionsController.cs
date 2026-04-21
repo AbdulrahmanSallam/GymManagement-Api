@@ -32,11 +32,16 @@ public class SubscriptionsController : ControllerBase
 
         var createSubscriptionResult = await _mediator.Send(command);
 
-        return createSubscriptionResult.MatchFirst(
-            subscription => Ok(new SubscriptionResponse(subscription.Id, Enum.Parse<SubscriptionType>(subscription.SubscriptionType.Name))),
-            error => Problem()
+        return createSubscriptionResult.Match(
+            subscription => CreatedAtAction(
+                nameof(GetSubscription),
+                new SubscriptionResponse(
+                    subscription.Id,
+                    ToDto(subscription.SubscriptionType)
+                )
+            ),
+         ProblemFromErrors
         );
-
     }
 
 
@@ -47,10 +52,42 @@ public class SubscriptionsController : ControllerBase
 
         var getSubscriptionResult = await _mediator.Send(query);
 
-        return getSubscriptionResult.MatchFirst(
-         subscription => Ok(new SubscriptionResponse(subscription.Id, Enum.Parse<SubscriptionType>(subscription.SubscriptionType.Name)))
-        , error => Problem());
+        return getSubscriptionResult.Match(
+         subscription => Ok(new SubscriptionResponse(
+            subscription.Id,
+            ToDto(subscription.SubscriptionType)))
+        , ProblemFromErrors);
+    }
+
+    private static SubscriptionType ToDto(DomainSubscriptionType subscriptionType)
+    {
+        return subscriptionType.Name switch
+        {
+            nameof(DomainSubscriptionType.Free) => SubscriptionType.Free,
+            nameof(DomainSubscriptionType.Starter) => SubscriptionType.Starter,
+            nameof(DomainSubscriptionType.Pro) => SubscriptionType.Pro,
+            _ => throw new InvalidOperationException(),
+        };
     }
 
 
+    private IActionResult ProblemFromErrors(List<Error> errors)
+    {
+        var firstError = errors.First();
+
+        var statusCode = firstError.Type switch
+        {
+            ErrorType.Validation => StatusCodes.Status400BadRequest,
+            ErrorType.NotFound => StatusCodes.Status404NotFound,
+            ErrorType.Conflict => StatusCodes.Status409Conflict,
+            ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
+            ErrorType.Forbidden => StatusCodes.Status403Forbidden,
+            _ => StatusCodes.Status500InternalServerError
+        };
+
+        return Problem(
+            statusCode: statusCode,
+            detail: firstError.Description
+        );
+    }
 }
