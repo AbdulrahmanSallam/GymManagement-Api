@@ -1,7 +1,7 @@
-@Host=http://localhost:5000
-@SubscriptionId= 7778c7cf-2835-4771-ac31-2929234633dc
-@GymId = f6fa6383-d259-4985-8906-f1e33ee58016
+@host=http://localhost:5000
+@subscriptionId= 7778c7cf-2835-4771-ac31-2929234633dc
+@gymId = f6fa6383-d259-4985-8906-f1e33ee58016
 
-DELETE {{Host}}/api/subscriptions/{{SubscriptionId}}/gyms/{{GymId}}
+DELETE {{host}}/api/subscriptions/{{subscriptionId}}/gyms/{{gymId}}
 
 ###

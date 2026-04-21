@@ -1,8 +1,8 @@
-@Host=http://localhost:5000
-@SubscriptionId= 7778c7cf-2835-4771-ac31-2929234633dc
-@GymId = f6fa6383-d259-4985-8906-f1e33ee58016
+@host=http://localhost:5000
+@subscriptionId= ec065da7-c01a-4618-ab65-98386860f10a
+@gymId = 46b86dd1-0794-4ddb-9b34-1d887efd45a0
 
-GET {{Host}}/api/subscriptions/{{SubscriptionId}}/gyms/{{GymId}}
+GET {{host}}/api/subscriptions/{{subscriptionId}}/gyms/{{gymId}}
 Accept-Type: application/json
 
 

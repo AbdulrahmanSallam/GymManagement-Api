@@ -1,10 +1,10 @@
-@Host=http://localhost:5000
-@SubscriptionId= 89b46396-66c5-423b-b832-3522ca6db218
-@GymId = ce68fc0b-e2ce-465e-b89c-fc4cf367f603
+@host=http://localhost:5000
+@subscriptionId= 89b46396-66c5-423b-b832-3522ca6db218
+@gymId = ce68fc0b-e2ce-465e-b89c-fc4cf367f603
 
 @trainerId=eef93292-ecdf-4304-897d-346464a4bbe7
 
-POST {{Host}}/api/subscriptions/{{SubscriptionId}}/gyms/{{GymId}}/trainers
+POST {{host}}/api/subscriptions/{{subscriptionId}}/gyms/{{gymId}}/trainers
 Content-Type: application/json
 
 {

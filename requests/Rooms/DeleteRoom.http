@@ -1,0 +1,5 @@
+@host=http://localhost:5000
+@gymId= 46b86dd1-0794-4ddb-9b34-1d887efd45a0
+@roomId= 265209ea-6720-4505-b160-77d7ab26b51f
+
+DELETE {{host}}/api/gyms/{{gymId}}/rooms/{{roomId}}
