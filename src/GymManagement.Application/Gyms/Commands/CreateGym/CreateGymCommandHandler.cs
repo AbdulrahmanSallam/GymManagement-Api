@@ -18,18 +18,31 @@ public class CreateGymCommandHandler : IRequestHandler<CreateGymCommand, ErrorOr
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ErrorOr<Gym>> Handle(CreateGymCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<Gym>> Handle(CreateGymCommand command, CancellationToken cancellationToken)
     {
 
-        var subscription = await _subscriptionRepository.GetByIdAsync(request.SubscriptionId);
+        var validator = new CreateGymCommandValidator();
+
+        var validatonResult = await validator.ValidateAsync(command);
+
+        if (!validatonResult.IsValid)
+        {
+            return validatonResult.Errors
+            .Select(error => Error.Validation(error.PropertyName, error.ErrorMessage))
+            .ToList();
+        }
+
+
+
+        var subscription = await _subscriptionRepository.GetByIdAsync(command.SubscriptionId);
         if (subscription is null)
         {
             return Error.NotFound(description: "Subscription not found");
         }
 
         var gym = new Gym(
-            request.Name,
-            request.SubscriptionId,
+            command.Name,
+            command.SubscriptionId,
             subscription.GetMaxGyms()
         );
 
