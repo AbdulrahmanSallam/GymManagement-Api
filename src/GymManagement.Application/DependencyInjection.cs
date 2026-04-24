@@ -1,3 +1,4 @@
+using GymManagement.Application.Gyms.Commands.CreateGym;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GymManagement.Application;
@@ -12,6 +13,7 @@ public static class DependencyInjection
         serviceCollection.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection));
+            configuration.AddBehavior<CreateGymCommandBehavior>();
         });
         return serviceCollection;
     }
