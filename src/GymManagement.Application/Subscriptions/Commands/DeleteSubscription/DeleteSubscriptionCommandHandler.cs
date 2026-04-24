@@ -7,7 +7,6 @@ namespace GymManagement.Application.Subscriptions.Commands.DeleteSubscription;
 public class DeleteSubscriptionCommandHandler : IRequestHandler<DeleteSubscriptionCommand, ErrorOr<Deleted>>
 {
     private readonly ISubscriptionsRepository _subscriptionRepository;
-    private readonly IGymsRepository _gymsRepository;
     private readonly IAdminsRepository _adminsRepository;
 
     private readonly IUnitOfWork _unitOfWork;
@@ -16,7 +15,6 @@ public class DeleteSubscriptionCommandHandler : IRequestHandler<DeleteSubscripti
     public DeleteSubscriptionCommandHandler(ISubscriptionsRepository subscriptionRepository, IGymsRepository gymsRepository, IUnitOfWork unitOfWork, IAdminsRepository adminsRepository)
     {
         _subscriptionRepository = subscriptionRepository;
-        _gymsRepository = gymsRepository;
         _unitOfWork = unitOfWork;
         _adminsRepository = adminsRepository;
     }
@@ -37,11 +35,7 @@ public class DeleteSubscriptionCommandHandler : IRequestHandler<DeleteSubscripti
 
         admin.DeleteSubscription(command.SubscriptionId);
 
-        var gymsToDelete = await _gymsRepository.ListGymsBySubscription(command.SubscriptionId);
-
         await _adminsRepository.UpdateAsync(admin);
-        await _subscriptionRepository.RemoveSubscriptionAsync(subscription);
-        await _gymsRepository.RemoveRangeAsync(gymsToDelete);
         await _unitOfWork.CommitChangesAsync();
 
         return Result.Deleted;
