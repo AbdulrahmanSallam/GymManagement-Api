@@ -12,22 +12,21 @@ namespace GymManagement.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection serviceCollection, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        serviceCollection.AddDbContext<GymManagementDbContext>(option =>
+        services.AddDbContext<GymManagementDbContext>(option =>
         {
             option.UseSqlServer(configuration.GetConnectionString("Default"));
         });
 
-        serviceCollection.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
-        serviceCollection.AddScoped<IGymsRepository, GymsRepository>();
-        serviceCollection.AddScoped<IAdminsRepository, AdminsRepository>();
-        serviceCollection.AddScoped<IUnitOfWork>(serviceCollection =>
+        services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
+        services.AddScoped<IGymsRepository, GymsRepository>();
+        services.AddScoped<IAdminsRepository, AdminsRepository>();
+        services.AddScoped<IUnitOfWork>(serviceCollection =>
             serviceCollection.GetRequiredService<GymManagementDbContext>()
         );
 
-
-        return serviceCollection;
+        return services;
     }
 
 }

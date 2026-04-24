@@ -1,5 +1,5 @@
 @host = http://localhost:5000
-@subscriptionId = 15d7a293-5faf-4dd3-824d-efe054a24d9e
+@subscriptionId = aa28cc56-642e-40a9-ad8f-a118c04f3599
 
 DELETE {{host}}/api/Subscriptions/{{subscriptionId}}
 #

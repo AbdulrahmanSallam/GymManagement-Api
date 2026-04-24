@@ -19,7 +19,13 @@ public class SubscriptionDeletedEventHandler : INotificationHandler<Subscription
     public async Task Handle(SubscriptionDeletedEvent notification, CancellationToken cancellationToken)
     {
 
-        var subscription = await _subscriptionRepository.GetByIdAsync(notification.SubscriptionId) ?? throw new InvalidOperationException();
+        var subscription = await _subscriptionRepository.GetByIdAsync(notification.SubscriptionId);
+
+        if (subscription is null)
+        {
+            // need error handling here 
+            throw new InvalidOperationException();
+        }
 
         await _subscriptionRepository.RemoveSubscriptionAsync(subscription);
         await _unitOfWork.CommitChangesAsync();

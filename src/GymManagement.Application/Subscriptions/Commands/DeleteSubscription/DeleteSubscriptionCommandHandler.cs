@@ -12,7 +12,7 @@ public class DeleteSubscriptionCommandHandler : IRequestHandler<DeleteSubscripti
     private readonly IUnitOfWork _unitOfWork;
 
 
-    public DeleteSubscriptionCommandHandler(ISubscriptionsRepository subscriptionRepository, IGymsRepository gymsRepository, IUnitOfWork unitOfWork, IAdminsRepository adminsRepository)
+    public DeleteSubscriptionCommandHandler(ISubscriptionsRepository subscriptionRepository, IUnitOfWork unitOfWork, IAdminsRepository adminsRepository)
     {
         _subscriptionRepository = subscriptionRepository;
         _unitOfWork = unitOfWork;

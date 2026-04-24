@@ -8,18 +8,19 @@ namespace GymManagement.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection serviceCollection)
+    public static IServiceCollection AddApplication(this IServiceCollection services)
     {
 
-        serviceCollection.AddMediatR(configuration =>
+        services.AddMediatR(options =>
         {
-            configuration.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection));
-            configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            options.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection));
+
+            options.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
 
-        serviceCollection.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection));
+        services.AddValidatorsFromAssemblyContaining(typeof(DependencyInjection));
 
-        return serviceCollection;
+        return services;
     }
 
 }

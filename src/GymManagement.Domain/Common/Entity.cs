@@ -13,7 +13,17 @@ public class Entity
     public Entity(Guid id) => Id = id;
 
 
-    private Entity() { }
+    protected Entity() { }
+
+
+    public List<IDomainEvent> PopDomainEvents()
+    {
+        var copy = _domainEvents.ToList();
+
+        _domainEvents.Clear();
+
+        return copy;
+    }
 
 
 }
