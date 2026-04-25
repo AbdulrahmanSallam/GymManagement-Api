@@ -1,8 +1,9 @@
-using ErrorOr;
+
+using GymManagement.TestCommon.Subscriptions;
+using GymManagement.TestCommon.Gyms;
 using FluentAssertions;
-using GymManagement.Domain.Gyms;
+using ErrorOr;
 using GymManagement.Domain.Subscriptions;
-using GymManagement.TestCommon;
 
 namespace GymManagement.Domain.UnitTests.Subscriptions;
 

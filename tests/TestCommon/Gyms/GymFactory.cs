@@ -1,7 +1,7 @@
 using GymManagement.Domain.Gyms;
 using GymManagement.TestCommon.TestConstants;
 
-namespace GymManagement.TestCommon;
+namespace GymManagement.TestCommon.Gyms;
 
 
 public static class GymFactory

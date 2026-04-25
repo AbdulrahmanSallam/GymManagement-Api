@@ -2,7 +2,7 @@ using System.Reflection.Metadata;
 using GymManagement.Domain.Subscriptions;
 using GymManagement.TestCommon.TestConstants;
 
-namespace GymManagement.TestCommon;
+namespace GymManagement.TestCommon.Subscriptions;
 
 
 public static class SubscriptionFactory

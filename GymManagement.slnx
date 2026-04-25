@@ -7,6 +7,7 @@
     <Project Path="src/GymManagement.Infrastructure/GymManagement.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/GymManagement.Application.UnitTests/GymManagement.Application.UnitTests.csproj" />
     <Project Path="tests/GymManagement.Domain.UnitTests/GymManagement.Domain.UnitTests.csproj" />
     <Project Path="tests/TestCommon/TestCommon.csproj" />
   </Folder>
