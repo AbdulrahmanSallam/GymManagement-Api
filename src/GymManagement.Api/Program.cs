@@ -1,24 +1,23 @@
+using GymManagement.Api;
 using GymManagement.Application;
 using GymManagement.Infrastructure;
-using GymManagement.Infrastructure.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 {
 
     builder.Services.AddOpenApi();
-    builder.Services.AddControllers();
-    builder.Services.AddProblemDetails();
-    builder.Services.AddHttpContextAccessor();
-
-    builder.Services.AddApplication().AddInfrastructure(builder.Configuration);
+    builder.Services
+    .AddPresentation()
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration);
 }
 
 var app = builder.Build();
 {
 
-    app.AddInfrastructureMiddlewares();
     app.UseExceptionHandler();
+    app.AddInfrastructureMiddlewares();
 
     if (app.Environment.IsDevelopment())
     {
@@ -26,6 +25,8 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
     app.MapControllers();
 
     app.Run();

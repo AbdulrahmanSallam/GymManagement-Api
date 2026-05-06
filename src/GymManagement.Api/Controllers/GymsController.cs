@@ -2,6 +2,8 @@ using ErrorOr;
 using GymManagement.Application.Gyms.Commands.AddTrainer;
 using GymManagement.Application.Gyms.Commands.CreateGym;
 using GymManagement.Application.Gyms.Commands.DeleteGym;
+using GymManagement.Application.Gyms.Commands.UpdateGym;
+using GymManagement.Application.Gyms.Queries.ListGyms;
 using GymManagement.Contracts.Gyms;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +53,18 @@ public class GymsController : ApiController
     }
 
 
+    [HttpGet]
+    public async Task<IActionResult> ListGymsBySubscription(Guid subscriptionId)
+    {
+        var query = new ListGymsBySubscriptionQuery(subscriptionId);
+
+        var listGymsBySubscriptionResult = await _mediator.Send(query);
+
+        return listGymsBySubscriptionResult.Match(
+        gyms => Ok(gyms.Select(gym => new GymResponse(gym.Id, gym.Name))),
+        Problem
+    );
+    }
 
     [HttpGet("{gymId:guid}")]
     public async Task<IActionResult> GetGym(Guid subscriptionId, Guid gymId)
@@ -66,6 +80,18 @@ public class GymsController : ApiController
     }
 
 
+    [HttpPost("{gymId:guid}")]
+    public async Task<IActionResult> UpdateGym(Guid subscriptionId, Guid gymId, [FromBody] UpdateGymRequest request)
+    {
+        var command = new UpdateGymCommand(subscriptionId, gymId, request.Name);
+
+        var UpdateGymResult = await _mediator.Send(command);
+
+        return UpdateGymResult.Match(
+              gym => Ok(new GymResponse(gym.Id, gym.Name)),
+              Problem
+          );
+    }
 
 
     [HttpPost("{gymId:guid}/trainers")]

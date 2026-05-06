@@ -33,7 +33,7 @@ namespace GymManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Admins", (string)null);
+                    b.ToTable("Admins");
 
                     b.HasData(
                         new
@@ -70,7 +70,7 @@ namespace GymManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gyms", (string)null);
+                    b.ToTable("Gyms");
                 });
 
             modelBuilder.Entity("GymManagement.Domain.Subscriptions.Subscription", b =>
@@ -78,13 +78,12 @@ namespace GymManagement.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AdminId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("SubscriptionType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("_adminId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("AdminId");
 
                     b.Property<string>("_gymIds")
                         .IsRequired()
@@ -97,7 +96,44 @@ namespace GymManagement.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("GymManagement.Domain.Users.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AdminId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ParticipantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TrainerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("_passwordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PasswordHash");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,8 @@
+@host=http://localhost:5000
+@subscriptionId= ec065da7-c01a-4618-ab65-98386860f10a
+
+GET {{host}}/api/subscriptions/{{subscriptionId}}/gyms/
+Accept-Type: application/json
+
+
+###

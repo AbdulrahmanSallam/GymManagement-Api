@@ -26,6 +26,11 @@ public class GymsRepository : IGymsRepository
         return await _dbContext.Gyms.AsNoTracking().AnyAsync(gym => gym.Id == id);
     }
 
+    public async Task<List<Gym>> GetAllAsync()
+    {
+        return await _dbContext.Gyms.AsNoTracking().ToListAsync();
+    }
+
     public async Task<Gym?> GetByIdAsync(Guid id)
     {
         return await _dbContext.Gyms.FirstOrDefaultAsync(gym => gym.Id == id);

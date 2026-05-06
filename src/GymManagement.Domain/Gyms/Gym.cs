@@ -14,9 +14,9 @@ public partial class Gym
     private readonly List<Guid> _roomIds = new();
     private readonly List<Guid> _trainerIds = new();
 
-    public string Name { get; init; }
+    public string Name { get; private set; }
 
-    public Guid SubscriptionId { get; init; }
+    public Guid SubscriptionId { get; }
 
     public Gym(string name, Guid subscriptionId, int maxrooms, Guid? id = null)
     {
@@ -66,6 +66,11 @@ public partial class Gym
     public void RemoveRoom(Guid roomId)
     {
         _roomIds.Remove(roomId);
+    }
+
+    public void UpdateGym(string name)
+    {
+        Name = name;
     }
 
     private Gym()

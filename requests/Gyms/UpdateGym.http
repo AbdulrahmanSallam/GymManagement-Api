@@ -1,0 +1,12 @@
+@host=http://localhost:5000
+@subscriptionId= ec065da7-c01a-4618-ab65-98386860f10a
+@gymId = 46b86dd1-0794-4ddb-9b34-1d887efd45a0
+
+POST {{host}}/api/subscriptions/{{subscriptionId}}/gyms/{{gymId}}
+Content-Type: application/json
+
+{
+    "name":"new"
+}
+
+###
